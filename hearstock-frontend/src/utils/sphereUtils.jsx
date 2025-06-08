@@ -21,9 +21,9 @@ export const convertToSphericalCoords = (data) => {
     const phi = phiStart + (1 - normalized) * (phiEnd - phiStart);
 
     // 구면좌표 → 데카르트 좌표계
-    const temp = Math.sin(phi);
+    const temp = Math.sin(phi); // Math.cos(PI / 2 - phi)
     const x = Math.cos(theta) * temp;
-    const y = Math.cos(phi);
+    const y = Math.cos(phi); // Math.sin(PI / 2 - phi)
     const z = Math.sin(theta) * temp;
 
     return {
