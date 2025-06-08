@@ -5,7 +5,7 @@ export const convertToSphericalCoords = (data) => {
 
   return data.map((d, i) => {
     const thetaRange = 60; // 좌우 60도
-    const phiRange = 60; // 상하 60도
+    const phiRange = 30; // 상하 60도
 
     const thetaStart = (90 - thetaRange) * (Math.PI / 180);
     const thetaEnd = (90 + thetaRange) * (Math.PI / 180);
@@ -20,7 +20,7 @@ export const convertToSphericalCoords = (data) => {
     const normalized = (d.price - minPrice) / (maxPrice - minPrice);
     const phi = phiStart + (1 - normalized) * (phiEnd - phiStart);
 
-    // 구면좌표 → 데카르트 좌표계
+    // 구면좌표 -> 데카르트 좌표계
     const temp = Math.sin(phi); // Math.cos(PI / 2 - phi)
     const x = Math.cos(theta) * temp;
     const y = Math.cos(phi); // Math.sin(PI / 2 - phi)
