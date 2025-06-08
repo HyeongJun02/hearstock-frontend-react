@@ -7,6 +7,9 @@ export default function SpherePage() {
     <div style={{ padding: '1rem' }}>
       <h2 style={{ textAlign: 'center' }}>Sphere 좌표 결과</h2>
       <Sphere3DScene />
+      <p>x: orange</p>
+      <p>y: green</p>
+      <p>z: blue</p>
       <SphereCoordsViewer />
     </div>
   );

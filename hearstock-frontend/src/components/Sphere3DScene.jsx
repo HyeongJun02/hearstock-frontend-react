@@ -4,7 +4,7 @@ import { OrbitControls, Line } from '@react-three/drei';
 import { sampleData } from '../data/sampleData';
 import { convertToSphericalCoords } from '../utils/sphereUtils';
 
-function Point({ position, color = 'orange' }) {
+function Point({ position, color = 'grey' }) {
   return (
     <mesh position={position}>
       <sphereGeometry args={[0.03, 16, 16]} />
