@@ -5,15 +5,11 @@ import { convertToSphericalCoords } from '../utils/sphereUtils';
 
 export default function SphereSoundPlayer() {
   const coords = convertToSphericalCoords(sampleData);
-
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const handlePlay = async () => {
-    await Tone.start(); // 사용자 제스처로 오디오 시작
+    await Tone.start();
 
-    const synth = new Tone.Synth().toDestination();
-
-    // 사용자 위치 설정
     Tone.Listener.positionX.value = 0;
     Tone.Listener.positionY.value = 0;
     Tone.Listener.positionZ.value = 0;
@@ -27,9 +23,13 @@ export default function SphereSoundPlayer() {
         positionZ: p.z,
       }).toDestination();
 
-      const tempSynth = new Tone.Synth().connect(panner);
-      tempSynth.triggerAttackRelease('C5', '8n'); // beep
-      await sleep(100); // 500ms 대기
+      const tempSynth = new Tone.Synth({
+        oscillator: { type: 'sine' },
+        envelope: { attack: 0.01, decay: 0.1, sustain: 0.1, release: 0.1 },
+      }).connect(panner);
+
+      tempSynth.triggerAttackRelease(p.freq, '8n'); // 🟡 주파수 사용
+      await sleep(100); // 간격
     }
   };
 

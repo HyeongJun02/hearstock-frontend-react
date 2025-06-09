@@ -4,27 +4,29 @@ export const convertToSphericalCoords = (data) => {
   const maxPrice = Math.max(...prices);
 
   return data.map((d, i) => {
-    const thetaRange = 60; // 좌우 60도
-    const phiRange = 30; // 상하 60도
+    const thetaRange = 60;
+    const phiRange = 30;
 
     const thetaStart = (90 - thetaRange) * (Math.PI / 180);
     const thetaEnd = (90 + thetaRange) * (Math.PI / 180);
     const phiStart = (90 - phiRange) * (Math.PI / 180);
     const phiEnd = (90 + phiRange) * (Math.PI / 180);
 
-    // θ: 시간 흐름을 구의 앞쪽 반만 사용 (0 ~ π)
+    // 시간 → θ
     const theta =
       thetaStart + (i / (data.length - 1)) * (thetaEnd - thetaStart);
 
-    // φ: 가격 정규화 (최고가일수록 위쪽에 배치)
+    // 가격 → φ (위일수록 고가)
     const normalized = (d.price - minPrice) / (maxPrice - minPrice);
     const phi = phiStart + (1 - normalized) * (phiEnd - phiStart);
 
-    // 구면좌표 -> 데카르트 좌표계
-    const temp = Math.sin(phi); // Math.cos(PI / 2 - phi)
+    const temp = Math.sin(phi);
     const x = Math.cos(theta) * temp;
-    const y = Math.cos(phi); // Math.sin(PI / 2 - phi)
+    const y = Math.cos(phi);
     const z = Math.sin(theta) * temp;
+
+    // 🔊 freq: 가격이 높을수록 높은 음 (200~1000Hz)
+    const freq = 200 + normalized * 800;
 
     return {
       date: d.date,
@@ -34,6 +36,7 @@ export const convertToSphericalCoords = (data) => {
       z: Number(z.toFixed(4)),
       theta: Number(theta.toFixed(4)),
       phi: Number(phi.toFixed(4)),
+      freq: Math.round(freq),
     };
   });
 };
