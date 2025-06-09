@@ -7,7 +7,7 @@ function Home() {
 
   return (
     <div className="home-container">
-      <h1 className="home-title">📊 데이터 시각화 메인</h1>
+      <h1 className="home-title">Hearstock</h1>
       <button className="nav-button" onClick={() => navigate('/sphere')}>
         Sphere 좌표 보기
       </button>

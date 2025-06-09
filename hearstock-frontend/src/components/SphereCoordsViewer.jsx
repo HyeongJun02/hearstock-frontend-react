@@ -1,6 +1,7 @@
 import React from 'react';
 import { sampleData } from '../data/sampleData';
 import { convertToSphericalCoords } from '../utils/sphereUtils';
+import './SphereCoordsViewer.css'; // CSS 파일 import
 
 export default function SphereCoordsViewer() {
   const coords = convertToSphericalCoords(sampleData);
@@ -8,7 +9,7 @@ export default function SphereCoordsViewer() {
   return (
     <div style={{ padding: '1rem' }}>
       <h2>Sphere Coordinates from JSON</h2>
-      <table border="1" cellPadding="4" cellSpacing="0">
+      <table>
         <thead>
           <tr>
             <th>Date</th>
