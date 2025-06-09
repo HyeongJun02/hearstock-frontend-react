@@ -15,7 +15,7 @@ export default function SpherePage() {
       <Sphere3DScene points={points}/>
       <SphereSoundPlayer />
       <Sphere2DGraph points={points} />
-      <SphereCoordsViewer />
+      <SphereCoordsViewer coords={points}/>
     </div>
   );
 }

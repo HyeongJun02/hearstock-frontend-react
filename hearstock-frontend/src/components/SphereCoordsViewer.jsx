@@ -1,10 +1,8 @@
 import React from 'react';
-import { sampleData } from '../data/sampleData';
-import { convertToSphericalCoords } from '../utils/sphereUtils';
-import './SphereCoordsViewer.css'; // CSS 파일 import
+import './SphereCoordsViewer.css';
 
-export default function SphereCoordsViewer() {
-  const coords = convertToSphericalCoords(sampleData);
+export default function SphereCoordsViewer({ coords }) {
+  // const coords = convertToSphericalCoords(sampleData);
 
   return (
     <div style={{ padding: '1rem' }}>
