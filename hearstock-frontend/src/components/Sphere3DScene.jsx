@@ -1,8 +1,6 @@
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Line } from '@react-three/drei';
-import { sampleData } from '../data/sampleData';
-import { convertToSphericalCoords } from '../utils/sphereUtils';
 
 function Point({ position, color = 'grey' }) {
   return (
@@ -13,8 +11,7 @@ function Point({ position, color = 'grey' }) {
   );
 }
 
-export default function Sphere3DScene() {
-  const points = convertToSphericalCoords(sampleData);
+export default function Sphere3DScene({ points }) {
   const linePoints = points.map((p) => [p.x, p.y, p.z]);
 
   return (
@@ -35,6 +32,7 @@ export default function Sphere3DScene() {
         {/* 좌표축 */}
         <axesHelper args={[1.5]} />
       </Canvas>
+      <p>x: 🟠, y: 🟢, z: 🔵</p>
     </div>
   );
 }
