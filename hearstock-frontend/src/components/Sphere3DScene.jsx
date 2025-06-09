@@ -15,7 +15,7 @@ export default function Sphere3DScene({ points }) {
   const linePoints = points.map((p) => [p.x, p.y, p.z]);
 
   return (
-    <div style={{ height: '500px', width: '100%' }}>
+    <div style={{ height: '300px', width: '100%' }}>
       <Canvas camera={{ position: [2, 2, 2], fov: 60 }}>
         <ambientLight />
         <pointLight position={[5, 5, 5]} />
