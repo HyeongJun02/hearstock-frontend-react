@@ -10,6 +10,11 @@ export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
   const handlePlay = async () => {
     await Tone.start();
 
+    // panner는 재사용
+    const panner = new Tone.Panner3D({
+      panningModel: 'HRTF',
+    }).toDestination();
+
     Tone.Listener.positionX.value = 0;
     Tone.Listener.positionY.value = 0;
     Tone.Listener.positionZ.value = 0;
@@ -18,12 +23,9 @@ export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
       const p = coords[i];
       setCurrentIndex(i); // 🔴 현재 재생 위치 업데이트
 
-      const panner = new Tone.Panner3D({
-        panningModel: 'HRTF',
-        positionX: -p.x,
-        positionY: p.y,
-        positionZ: p.z,
-      }).toDestination();
+      panner.positionX.value = -p.x;
+      panner.positionY.value = p.y;
+      panner.positionZ.value = p.z;
 
       const tempSynth = new Tone.Synth({
         oscillator: { type: 'sine' },
@@ -33,6 +35,7 @@ export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
       //tempSynth.triggerAttackRelease(p.freq, '8n'); // 🟡 주파수 사용
       tempSynth.triggerAttackRelease(440, '8n'); // 주파수 고정 = 높낮이 제거
       await sleep(500); // 간격
+      tempSynth.dispose();
     }
 
     setCurrentIndex(null);
