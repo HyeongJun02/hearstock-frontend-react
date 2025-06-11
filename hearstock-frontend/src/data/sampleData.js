@@ -1,37 +1,40 @@
-export const sampleData = (() => {
-  const data = [];
-  const baseDate = new Date();
-  const total = 30;
+export const sampleData = [
+  { date: '2024-07-01', price: 1300 },
+  { date: '2024-07-02', price: 1250 },
+  { date: '2024-07-03', price: 1200 },
+  { date: '2024-07-04', price: 1150 },
+  { date: '2024-07-05', price: 1100 }, // 📉 급락 구간
 
-  let price = 1000; // 시작 가격
+  { date: '2024-07-06', price: 1140 },
+  { date: '2024-07-07', price: 1180 },
+  { date: '2024-07-08', price: 1230 },
+  { date: '2024-07-09', price: 1290 },
+  { date: '2024-07-10', price: 1350 }, // 📈 급반등
 
-  for (let i = 0; i < total; i++) {
-    const date = new Date(baseDate);
-    date.setDate(date.getDate() - (total - 1 - i));
+  { date: '2024-07-11', price: 1345 },
+  { date: '2024-07-12', price: 1340 },
+  { date: '2024-07-13', price: 1338 },
+  { date: '2024-07-14', price: 1342 },
+  { date: '2024-07-15', price: 1345 }, // ➖ 박스권 횡보
 
-    // 구간별 추세 설정
-    if (i < 10) {
-      // 1~10: 상승
-      price += Math.random() * 10 + 5; // +5 ~ +15
-    } else if (i < 20) {
-      // 11~20: 하락
-      price -= Math.random() * 10 + 5; // -5 ~ -15
-    } else {
-      // 21~30: 상승
-      price += Math.random() * 10 + 5;
-    }
+  { date: '2024-07-16', price: 1360 },
+  { date: '2024-07-17', price: 1380 },
+  { date: '2024-07-18', price: 1410 },
+  { date: '2024-07-19', price: 1450 },
+  { date: '2024-07-20', price: 1490 }, // 📈 재차 상승
 
-    // 약간의 노이즈 추가
-    const noise = (Math.random() - 0.5) * 10; // -5 ~ +5
+  { date: '2024-07-21', price: 1475 },
+  { date: '2024-07-22', price: 1460 },
+  { date: '2024-07-23', price: 1440 },
+  { date: '2024-07-24', price: 1425 },
+  { date: '2024-07-25', price: 1435 }, // 📉 약한 조정
 
-    data.push({
-      date: date.toISOString().slice(0, 10),
-      price: Math.floor(price + noise),
-    });
-  }
-
-  return data;
-})();
+  { date: '2024-07-26', price: 1440 },
+  { date: '2024-07-27', price: 1450 },
+  { date: '2024-07-28', price: 1445 },
+  { date: '2024-07-29', price: 1430 },
+  { date: '2024-07-30', price: 1720 },
+];
 
 // 극단적인 데이터 ver
 // export const sampleData = (() => {

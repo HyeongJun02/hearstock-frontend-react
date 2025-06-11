@@ -5,7 +5,7 @@ export const convertToSphericalCoords = (data) => {
 
   return data.map((d, i) => {
     const thetaRange = 60;
-    const phiRange = 30;
+    const phiRange = 60;
 
     const thetaStart = (90 - thetaRange) * (Math.PI / 180);
     const thetaEnd = (90 + thetaRange) * (Math.PI / 180);

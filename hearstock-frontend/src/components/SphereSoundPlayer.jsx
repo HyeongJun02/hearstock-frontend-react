@@ -13,6 +13,10 @@ export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
     // panner는 재사용
     const panner = new Tone.Panner3D({
       panningModel: 'HRTF',
+      distanceModel: 'inverse',
+      refDistance: 1,
+      maxDistance: 1000,
+      rolloffFactor: 0.01,
     }).toDestination();
 
     Tone.Listener.positionX.value = 0;
@@ -34,7 +38,7 @@ export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
 
       //tempSynth.triggerAttackRelease(p.freq, '8n'); // 🟡 주파수 사용
       tempSynth.triggerAttackRelease(440, '8n'); // 주파수 고정 = 높낮이 제거
-      await sleep(500); // 간격
+      await sleep(200); // 간격
       tempSynth.dispose();
     }
 
