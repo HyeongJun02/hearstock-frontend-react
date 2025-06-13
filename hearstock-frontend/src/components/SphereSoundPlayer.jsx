@@ -23,6 +23,11 @@ export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
     Tone.Listener.positionY.value = 0;
     Tone.Listener.positionZ.value = 0;
 
+    const tempSynth = new Tone.Synth({
+      oscillator: { type: 'sine' },
+      envelope: { attack: 0.01, decay: 0.1, sustain: 0.1, release: 0.01 },
+    }).connect(panner);
+
     for (let i = 0; i < coords.length; i++) {
       const p = coords[i];
       setCurrentIndex(i); // 🔴 현재 재생 위치 업데이트
@@ -31,15 +36,10 @@ export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
       panner.positionY.value = p.y;
       panner.positionZ.value = p.z;
 
-      const tempSynth = new Tone.Synth({
-        oscillator: { type: 'sine' },
-        envelope: { attack: 0.01, decay: 0.1, sustain: 0.1, release: 0.1 },
-      }).connect(panner);
-
-      //tempSynth.triggerAttackRelease(p.freq, '8n'); // 🟡 주파수 사용
-      tempSynth.triggerAttackRelease(440, '8n'); // 주파수 고정 = 높낮이 제거
+      tempSynth.triggerAttackRelease(p.freq, 0.25); // 🟡 주파수 사용
+      //tempSynth.triggerAttackRelease(440, '8n'); // 주파수 고정 = 높낮이 제거
       await sleep(200); // 간격
-      tempSynth.dispose();
+      //tempSynth.dispose();
     }
 
     setCurrentIndex(null);
