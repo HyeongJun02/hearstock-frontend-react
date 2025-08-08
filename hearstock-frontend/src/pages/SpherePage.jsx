@@ -15,7 +15,7 @@ export default function SpherePage() {
   return (
     <div style={{ padding: '1rem' }}>
       <h2 style={{ textAlign: 'center' }}>Sphere 좌표 결과</h2>
-      <Sphere3DScene points={points} />
+      <Sphere3DScene points={points} currentIndex={currentIndex} />
       <SphereSoundPlayer coords={coords} setCurrentIndex={setCurrentIndex} />
       <Sphere2DGraph points={points} currentIndex={currentIndex} />
       <SphereCoordsViewer coords={points} />
