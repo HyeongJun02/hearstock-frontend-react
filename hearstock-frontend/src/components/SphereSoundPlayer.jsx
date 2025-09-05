@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'; // useState 추가
+import React, { useEffect, useRef, useState } from 'react';
 import * as Tone from 'tone';
 
 export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
@@ -21,6 +21,9 @@ export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
   // 외재화 강도 상태 및 좌우 비대칭 스케일
   const [extLevel, setExtLevel] = useState('basic'); // 'low' | 'basic' | 'strong'
   const asymScaleRef = useRef(0.25); // 좌/우 비대칭 강도
+
+  const [isPlaying, setIsPlaying] = useState(false); // 재생 중 UI 제어
+  const abortRef = useRef(false);
 
   // 짧은 초기 반사 IR 생성기 (스테레오, 80~150ms 추천)
   const createEarlyReflectionsIR = (
@@ -190,35 +193,60 @@ export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
   const handlePlay = async () => {
     await ensureGraph();
 
+    if (isPlaying) return; // 이미 재생 중이면 무시
+    abortRef.current = false; // 새로운 플레이 시작
+    setIsPlaying(true); // 버튼 상태 업데이트
+
     const panner = pannerRef.current;
     const synth = synthRef.current;
     if (!panner || !synth) return;
 
     applyExternalizePresetLevel(extLevel); // 선택된 강도 적용
 
-    for (let i = 0; i < coords.length; i++) {
-      const p = coords[i];
-      setCurrentIndex(i);
+    try {
+      for (let i = 0; i < coords.length; i++) {
+        if (abortRef.current) break;
 
-      const t = Tone.now() + 0.06;
-      panner.positionX.linearRampToValueAtTime(p.x, t);
-      panner.positionY.linearRampToValueAtTime(p.y, t);
-      panner.positionZ.linearRampToValueAtTime(-p.z, t);
+        const p = coords[i];
+        setCurrentIndex(i);
 
-      // 거리 기반 프리딜레이 + 좌/우 비대칭
-      const dist = Math.max(0.6, Math.min(2.5, Math.hypot(p.x, p.y, p.z)));
-      const preDelay = dist / 343; // s
-      erDelayRef.current?.delayTime.rampTo(preDelay, 0.08);
+        const t = Tone.now() + 0.06;
+        panner.positionX.linearRampToValueAtTime(p.x, t);
+        panner.positionY.linearRampToValueAtTime(p.y, t);
+        panner.positionZ.linearRampToValueAtTime(-p.z, t);
 
-      const azApprox = Math.max(-1, Math.min(1, p.x / (Math.abs(p.z) + 1e-3)));
-      const asym = asymScaleRef.current; // 프리셋 반영
-      erGainLRef.current?.gain.rampTo(1 - asym * azApprox, 0.08);
-      erGainRRef.current?.gain.rampTo(1 + asym * azApprox, 0.08);
+        // 거리 기반 프리딜레이 + 좌/우 비대칭
+        const dist = Math.max(0.6, Math.min(2.5, Math.hypot(p.x, p.y, p.z)));
+        const preDelay = dist / 343; // s
+        erDelayRef.current?.delayTime.rampTo(preDelay, 0.08);
 
-      synth.triggerAttackRelease(p.freq, 0.25);
-      await sleep(100);
+        const azApprox = Math.max(
+          -1,
+          Math.min(1, p.x / (Math.abs(p.z) + 1e-3))
+        );
+        const asym = asymScaleRef.current; // 프리셋 반영
+        erGainLRef.current?.gain.rampTo(1 - asym * azApprox, 0.08);
+        erGainRRef.current?.gain.rampTo(1 + asym * azApprox, 0.08);
+
+        synth.triggerAttackRelease(p.freq, 0.25);
+        await sleep(100);
+        if (abortRef.current) break;
+      }
+    } finally {
+      setCurrentIndex(null);
+      setIsPlaying(false); // 재생 상태 해제
     }
-    setCurrentIndex(null);
+  };
+
+  const handleStop = () => {
+    // 종료 핸들러
+    abortRef.current = true; // 루프 즉시 중단
+    // 현재 음이 남았더라도 빠르게 감쇄되게 살짝 줄여줌(선택)
+    // earlyGainRef.current?.gain.rampTo(0, 0.05);
+    // lateGainRef.current?.gain.rampTo(0, 0.05);
+    try {
+      synthRef.current?.triggerRelease?.();
+    } catch (_) {}
   };
 
   // UI: 외재화 강도 토글 버튼들
@@ -276,6 +304,18 @@ export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
 
       <button onClick={handlePlay} style={{ padding: '10px 20px' }}>
         🔊 재생 (Beep)
+      </button>
+      <button
+        onClick={handleStop}
+        disabled={!isPlaying}
+        style={{
+          padding: '10px 20px',
+          borderRadius: 8,
+          opacity: !isPlaying ? 0.6 : 1,
+        }}
+        title={!isPlaying ? '재생 중이 아닙니다' : '정지'}
+      >
+        ⏹ 종료
       </button>
     </div>
   );
