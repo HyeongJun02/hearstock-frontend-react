@@ -21,7 +21,7 @@ ChartJS.register(
   Legend
 );
 
-export default function Sphere2DGraph({ points, currentIndex }) {
+export default function Sphere2DGraph({ points }) {
   // x, y 좌표 배열 생성
   const data = {
     labels: points.map((point) => point.date), // 날짜를 x축에 표시
@@ -32,10 +32,6 @@ export default function Sphere2DGraph({ points, currentIndex }) {
         borderColor: 'rgba(75, 192, 192, 1)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         fill: true,
-        pointBackgroundColor: points.map(
-          (_, i) => (i === currentIndex ? 'red' : 'rgba(75, 192, 192, 1)') // 현재 인덱스 빨간색
-        ),
-        pointRadius: points.map((_, i) => (i === currentIndex ? 8 : 3)), // 강조 효과
       },
     ],
   };
