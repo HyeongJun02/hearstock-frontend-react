@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import * as Tone from "tone";
+import React, { useEffect, useRef, useState } from 'react';
+import * as Tone from 'tone';
 
 export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
   // 재사용 노드
@@ -19,7 +19,7 @@ export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
   const initedRef = useRef(false);
 
   // 외재화 강도 상태 및 좌우 비대칭 스케일
-  const [extLevel, setExtLevel] = useState("basic"); // 'low' | 'basic' | 'strong'
+  const [extLevel, setExtLevel] = useState('basic'); // 'low' | 'basic' | 'strong'
   const asymScaleRef = useRef(0.25); // 좌/우 비대칭 강도
 
   const [isPlaying, setIsPlaying] = useState(false); // 재생 중 UI 제어
@@ -99,13 +99,13 @@ export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
 
     // 패너(HRTF)
     const panner = new Tone.Panner3D({
-      panningModel: "HRTF",
+      panningModel: 'HRTF',
       positionX: 0,
       positionY: 0,
       positionZ: 1.2,
       refDistance: 1,
       rolloffFactor: 1,
-      distanceModel: "inverse",
+      distanceModel: 'inverse',
     });
     panner.connect(bus);
 
@@ -137,7 +137,7 @@ export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
 
     // 소스
     const synth = new Tone.Synth({
-      oscillator: { type: "sine" },
+      oscillator: { type: 'sine' },
       envelope: { attack: 0.01, decay: 0.08, sustain: 0.1, release: 0.08 },
     });
     // Direct(HRTF) + ER + Late 병렬
@@ -168,7 +168,7 @@ export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
   };
 
   // 외재화 프리셋: 강도별 파라미터를 한 번에 적용
-  const applyExternalizePresetLevel = (level = "basic") => {
+  const applyExternalizePresetLevel = (level = 'basic') => {
     // 프리셋 테이블
     const table = {
       low: { d: 1.1, er: 0.1, late: 0.035, high: -0.8, asym: 0.18 },
@@ -260,60 +260,60 @@ export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
   };
 
   return (
-    <div style={{ textAlign: "center", margin: "1rem" }}>
+    <div style={{ textAlign: 'center', margin: '1rem' }}>
       {/* 프리셋 토글 */}
       <div
         style={{
           marginBottom: 12,
-          display: "flex",
+          display: 'flex',
           gap: 8,
-          justifyContent: "center",
+          justifyContent: 'center',
         }}
       >
         <button
-          onClick={() => onClickPreset("low")}
+          onClick={() => onClickPreset('low')}
           style={{
-            padding: "6px 12px",
+            padding: '6px 12px',
             borderRadius: 8,
-            background: extLevel === "low" ? "#e9f5ff" : "#f2f2f2",
+            background: extLevel === 'low' ? '#e9f5ff' : '#f2f2f2',
           }}
         >
           외재화: 낮음
         </button>
         <button
-          onClick={() => onClickPreset("basic")}
+          onClick={() => onClickPreset('basic')}
           style={{
-            padding: "6px 12px",
+            padding: '6px 12px',
             borderRadius: 8,
-            background: extLevel === "basic" ? "#e9f5ff" : "#f2f2f2",
+            background: extLevel === 'basic' ? '#e9f5ff' : '#f2f2f2',
           }}
         >
           외재화: 기본
         </button>
         <button
-          onClick={() => onClickPreset("strong")}
+          onClick={() => onClickPreset('strong')}
           style={{
-            padding: "6px 12px",
+            padding: '6px 12px',
             borderRadius: 8,
-            background: extLevel === "strong" ? "#e9f5ff" : "#f2f2f2",
+            background: extLevel === 'strong' ? '#e9f5ff' : '#f2f2f2',
           }}
         >
           외재화: 강함
         </button>
       </div>
 
-      <button onClick={handlePlay} style={{ padding: "10px 20px" }}>
+      <button onClick={handlePlay} style={{ padding: '10px 20px' }}>
         🔊 재생 (Beep)
       </button>
       <button
         onClick={handleStop}
         disabled={!isPlaying}
         style={{
-          padding: "10px 20px",
+          padding: '10px 20px',
           borderRadius: 8,
           opacity: !isPlaying ? 0.6 : 1,
         }}
-        title={!isPlaying ? "재생 중이 아닙니다" : "정지"}
+        title={!isPlaying ? '재생 중이 아닙니다' : '정지'}
       >
         ⏹ 종료
       </button>
