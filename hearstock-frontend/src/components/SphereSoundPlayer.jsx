@@ -92,7 +92,7 @@ export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
     Tone.Listener.upZ.value = 0;
 
     // 마스터 버스 + EQ
-    const eq = new Tone.EQ3({ low: 0, mid: 0, high: -1.2 });
+    const eq = new Tone.EQ3({ low: 0, mid: 0, high: -3 });
     const bus = new Tone.Gain(1);
     bus.connect(eq);
     eq.toDestination();
@@ -103,9 +103,9 @@ export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
       positionX: 0,
       positionY: 0,
       positionZ: 1.2,
-      refDistance: 1,
-      rolloffFactor: 1,
-      distanceModel: 'inverse',
+      refDistance: 2.0,
+      rolloffFactor: 2.0,
+      distanceModel: 'exponential', //inverse , exponential
     });
     panner.connect(bus);
 
@@ -138,8 +138,9 @@ export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
     // 소스
     const synth = new Tone.Synth({
       oscillator: { type: 'sine' },
-      envelope: { attack: 0.01, decay: 0.08, sustain: 0.1, release: 0.08 },
+      envelope: { attack: 0.01, decay: 0.08, sustain: 0.6, release: 0.3 },
     });
+
     // Direct(HRTF) + ER + Late 병렬
     synth.connect(panner);
     synth.connect(erDelay);
@@ -179,7 +180,7 @@ export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
 
     // 안전 가드 + 램프 적용
     earlyGainRef.current?.gain.rampTo(cfg.er, 0.1);
-    lateGainRef.current?.gain.rampTo(cfg.late, 0.1);
+    lateGainRef.current?.gain.rampTo(cfg.late, 0.2);
     eqRef.current?.high.rampTo(cfg.high, 0.2);
     pannerRef.current?.positionZ.linearRampToValueAtTime(
       cfg.d,
@@ -229,7 +230,7 @@ export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
         erGainRRef.current?.gain.rampTo(1 + asym * azApprox, 0.08);
 
         synth.triggerAttackRelease(p.freq, 0.25);
-        await sleep(100);
+        await sleep(200);
         if (abortRef.current) break;
       }
     } finally {
