@@ -1,34 +1,290 @@
-export const sampleData = (() => {
-  const data = [];
-  const baseDate = new Date();
-  const total = 30;
-
-  let price = 1000; // 시작 가격
-
-  for (let i = 0; i < total; i++) {
-    const date = new Date(baseDate);
-    date.setDate(date.getDate() - (total - 1 - i));
-
-    // 구간별 추세 설정
-    if (i < 10) {
-      // 1~10: 상승
-      price += Math.random() * 10 + 5; // +5 ~ +15
-    } else if (i < 20) {
-      // 11~20: 하락
-      price -= Math.random() * 10 + 5; // -5 ~ -15
-    } else {
-      // 21~30: 상승
-      price += Math.random() * 10 + 5;
-    }
-
-    // 약간의 노이즈 추가
-    const noise = (Math.random() - 0.5) * 10; // -5 ~ +5
-
-    data.push({
-      date: date.toISOString().slice(0, 10),
-      price: Math.floor(price + noise),
-    });
-  }
-
-  return data;
-})();
+export const sampleData = [
+  {
+    timestamp: '2025-07-08',
+    open: 61600,
+    high: 62400,
+    low: 61000,
+    close: 61400,
+    volume: 20213724,
+    fluctuation_rate: -0.49,
+  },
+  {
+    timestamp: '2025-07-09',
+    open: 61400,
+    high: 61400,
+    low: 60200,
+    close: 60400,
+    volume: 17533415,
+    fluctuation_rate: -1.63,
+  },
+  {
+    timestamp: '2025-07-10',
+    open: 60600,
+    high: 61200,
+    low: 60400,
+    close: 61000,
+    volume: 14768473,
+    fluctuation_rate: 0.99,
+  },
+  {
+    timestamp: '2025-07-11',
+    open: 61300,
+    high: 62800,
+    low: 61200,
+    close: 62600,
+    volume: 19140650,
+    fluctuation_rate: 2.62,
+  },
+  {
+    timestamp: '2025-07-14',
+    open: 62300,
+    high: 62600,
+    low: 61800,
+    close: 62500,
+    volume: 13563846,
+    fluctuation_rate: -0.16,
+  },
+  {
+    timestamp: '2025-07-15',
+    open: 62300,
+    high: 63800,
+    low: 62000,
+    close: 63700,
+    volume: 18442202,
+    fluctuation_rate: 1.92,
+  },
+  {
+    timestamp: '2025-07-16',
+    open: 63700,
+    high: 64700,
+    low: 63100,
+    close: 64700,
+    volume: 23042660,
+    fluctuation_rate: 1.57,
+  },
+  {
+    timestamp: '2025-07-17',
+    open: 65900,
+    high: 66800,
+    low: 64400,
+    close: 66700,
+    volume: 39448683,
+    fluctuation_rate: 3.09,
+  },
+  {
+    timestamp: '2025-07-18',
+    open: 67000,
+    high: 67800,
+    low: 66300,
+    close: 67100,
+    volume: 23951531,
+    fluctuation_rate: 0.6,
+  },
+  {
+    timestamp: '2025-07-21',
+    open: 67400,
+    high: 68800,
+    low: 67200,
+    close: 67800,
+    volume: 17723148,
+    fluctuation_rate: 1.04,
+  },
+  {
+    timestamp: '2025-07-22',
+    open: 68100,
+    high: 68500,
+    low: 65600,
+    close: 66000,
+    volume: 20829006,
+    fluctuation_rate: -2.65,
+  },
+  {
+    timestamp: '2025-07-23',
+    open: 66200,
+    high: 66500,
+    low: 64900,
+    close: 66400,
+    volume: 15687058,
+    fluctuation_rate: 0.61,
+  },
+  {
+    timestamp: '2025-07-24',
+    open: 66500,
+    high: 66800,
+    low: 65900,
+    close: 66000,
+    volume: 12660193,
+    fluctuation_rate: -0.6,
+  },
+  {
+    timestamp: '2025-07-25',
+    open: 65700,
+    high: 66300,
+    low: 65500,
+    close: 65900,
+    volume: 8080910,
+    fluctuation_rate: -0.15,
+  },
+  {
+    timestamp: '2025-07-28',
+    open: 68200,
+    high: 70400,
+    low: 67200,
+    close: 70400,
+    volume: 35332500,
+    fluctuation_rate: 6.83,
+  },
+  {
+    timestamp: '2025-07-29',
+    open: 70800,
+    high: 70800,
+    low: 68800,
+    close: 70600,
+    volume: 28190940,
+    fluctuation_rate: 0.28,
+  },
+  {
+    timestamp: '2025-07-30',
+    open: 71000,
+    high: 73700,
+    low: 70600,
+    close: 72600,
+    volume: 34761444,
+    fluctuation_rate: 2.83,
+  },
+  {
+    timestamp: '2025-07-31',
+    open: 73000,
+    high: 74000,
+    low: 71000,
+    close: 71400,
+    volume: 26568072,
+    fluctuation_rate: -1.65,
+  },
+  {
+    timestamp: '2025-08-01',
+    open: 70200,
+    high: 72000,
+    low: 68800,
+    close: 68900,
+    volume: 24038534,
+    fluctuation_rate: -3.5,
+  },
+  {
+    timestamp: '2025-08-04',
+    open: 69500,
+    high: 70200,
+    low: 68700,
+    close: 69700,
+    volume: 14780072,
+    fluctuation_rate: 1.16,
+  },
+  {
+    timestamp: '2025-08-05',
+    open: 71000,
+    high: 71500,
+    low: 69700,
+    close: 69900,
+    volume: 14392903,
+    fluctuation_rate: 0.29,
+  },
+  {
+    timestamp: '2025-08-06',
+    open: 69200,
+    high: 69400,
+    low: 68300,
+    close: 68800,
+    volume: 12542415,
+    fluctuation_rate: -1.57,
+  },
+  {
+    timestamp: '2025-08-07',
+    open: 70800,
+    high: 71000,
+    low: 69700,
+    close: 70500,
+    volume: 15008213,
+    fluctuation_rate: 2.47,
+  },
+  {
+    timestamp: '2025-08-08',
+    open: 71000,
+    high: 72400,
+    low: 70700,
+    close: 71800,
+    volume: 22241128,
+    fluctuation_rate: 1.84,
+  },
+  {
+    timestamp: '2025-08-11',
+    open: 72000,
+    high: 72100,
+    low: 70800,
+    close: 71000,
+    volume: 11354253,
+    fluctuation_rate: -1.11,
+  },
+  {
+    timestamp: '2025-08-12',
+    open: 71100,
+    high: 72400,
+    low: 71100,
+    close: 71100,
+    volume: 15797656,
+    fluctuation_rate: 0.14,
+  },
+  {
+    timestamp: '2025-08-13',
+    open: 71900,
+    high: 72100,
+    low: 71400,
+    close: 71900,
+    volume: 12305742,
+    fluctuation_rate: 1.13,
+  },
+  {
+    timestamp: '2025-08-14',
+    open: 71900,
+    high: 71900,
+    low: 71200,
+    close: 71600,
+    volume: 11946122,
+    fluctuation_rate: -0.42,
+  },
+  {
+    timestamp: '2025-08-18',
+    open: 71100,
+    high: 71200,
+    low: 70000,
+    close: 70000,
+    volume: 13595591,
+    fluctuation_rate: -2.23,
+  },
+  {
+    timestamp: '2025-08-19',
+    open: 70400,
+    high: 70700,
+    low: 69700,
+    close: 70000,
+    volume: 10533082,
+    fluctuation_rate: 0,
+  },
+  {
+    timestamp: '2025-08-20',
+    open: 70100,
+    high: 70700,
+    low: 69400,
+    close: 70500,
+    volume: 17445516,
+    fluctuation_rate: 0.71,
+  },
+  {
+    timestamp: '2025-08-21',
+    open: 71500,
+    high: 71900,
+    low: 70600,
+    close: 70600,
+    volume: 18843833,
+    fluctuation_rate: 0.14,
+  },
+];
