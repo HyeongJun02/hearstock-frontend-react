@@ -16,13 +16,17 @@ export default function SpherePage() {
   return (
     <div className="sphere-container">
       <div className="sphere-left">
-        <Sphere3DScene points={points} currentIndex={currentIndex} />
-        <SphereSoundPlayer coords={coords} setCurrentIndex={setCurrentIndex} />
-        <Sphere2DGraph points={points} currentIndex={currentIndex} />
+        <SphereSoundPlayer
+          coords={coords}
+          currentIndex={currentIndex}
+          setCurrentIndex={setCurrentIndex}
+        />
+        <SphereCoordsViewer coords={points} />
       </div>
 
       <div className="sphere-right">
-        <SphereCoordsViewer coords={points} />
+        <Sphere3DScene points={points} currentIndex={currentIndex} />
+        <Sphere2DGraph points={points} currentIndex={currentIndex} />
       </div>
     </div>
   );

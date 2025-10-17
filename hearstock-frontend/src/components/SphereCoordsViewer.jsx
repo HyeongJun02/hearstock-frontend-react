@@ -4,7 +4,6 @@ import './SphereCoordsViewer.css';
 export default function SphereCoordsViewer({ coords }) {
   return (
     <div className="sphere-coords-container">
-      <h2>📊 Sphere Coordinates</h2>
       <div className="table-wrapper">
         <table>
           <thead>
@@ -14,7 +13,7 @@ export default function SphereCoordsViewer({ coords }) {
               <th>x</th>
               <th>y</th>
               <th>z</th>
-              <th>θ (rad)</th>
+              <th>θ (theta)</th>
               <th>φ (phi)</th>
             </tr>
           </thead>

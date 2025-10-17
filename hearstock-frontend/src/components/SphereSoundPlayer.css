@@ -90,3 +90,77 @@
   background: #ffcdd2;
   cursor: not-allowed;
 }
+
+/* 슬라이더 전체 섹션 */
+.slider-section {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  width: 100%;
+}
+
+/* 텍스트 라벨 */
+.slider-label p {
+  font-size: 15px;
+  color: #333;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* 슬라이더 박스 (가로 영역 넓힘) */
+.slider-box {
+  width: 100%;
+  max-width: 90%;
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: center;
+}
+
+/* 슬라이더 본체 */
+.slider-extended {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #1976d2 0%, #64b5f6 100%);
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* 슬라이더 핸들(브라우저별 공통 스타일) */
+.slider-extended::-webkit-slider-thumb {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #1976d2;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.slider-extended::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  background: #0d47a1;
+}
+
+/* Firefox */
+.slider-extended::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #1976d2;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+.slider-extended::-moz-range-thumb:hover {
+  transform: scale(1.1);
+  background: #0d47a1;
+}

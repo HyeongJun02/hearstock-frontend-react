@@ -3,7 +3,11 @@ import * as Tone from 'tone';
 
 import './SphereSoundPlayer.css';
 
-export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
+export default function SphereSoundPlayer({
+  coords,
+  currentIndex,
+  setCurrentIndex,
+}) {
   // 재사용 노드
   const pannerRef = useRef(null);
   const synthRef = useRef(null);
@@ -193,6 +197,32 @@ export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
     asymScaleRef.current = cfg.asym;
   };
 
+  /** 슬라이더에서 한 점만 재생하는 함수 */
+  const playSingleTone = async (index) => {
+    await ensureGraph();
+    const p = coords[index];
+    const synth = synthRef.current;
+    const panner = pannerRef.current;
+    if (!synth || !panner || !p) return;
+
+    // 현재 인덱스 갱신
+    setCurrentIndex(index);
+
+    // 이전 음이 계속 이어지지 않게 즉시 끊고 새로 재생
+    synth.triggerRelease();
+    const t = Tone.now() + 0.03;
+    panner.positionX.linearRampToValueAtTime(p.x, t);
+    panner.positionY.linearRampToValueAtTime(p.y, t);
+    panner.positionZ.linearRampToValueAtTime(-p.z, t);
+    synth.triggerAttackRelease(p.freq, 0.25);
+  };
+
+  /** 슬라이더 이동 핸들러 */
+  const handleSliderChange = (val) => {
+    const idx = Math.max(0, Math.min(coords.length - 1, val));
+    playSingleTone(idx);
+  };
+
   const handlePlay = async () => {
     await ensureGraph();
 
@@ -266,12 +296,13 @@ export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
     <div className="sound-player">
       <h3 className="sound-title">🔊 Sphere Sound Controller</h3>
 
+      {/* 외재화 프리셋 버튼 */}
       <div className="preset-buttons">
         {['low', 'basic', 'strong'].map((level) => (
           <button
             key={level}
             className={`preset-btn ${extLevel === level ? 'active' : ''}`}
-            onClick={() => onClickPreset(level)}
+            onClick={() => setExtLevel(level)}
           >
             {level === 'low'
               ? '외재화: 낮음'
@@ -282,13 +313,36 @@ export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
         ))}
       </div>
 
+      {/* 전체 재생 / 정지 */}
       <div className="control-buttons">
         <button className="play-btn" onClick={handlePlay} disabled={isPlaying}>
-          ▶ 재생
+          ▶ 전체 재생
         </button>
-        <button className="stop-btn" onClick={handleStop} disabled={!isPlaying}>
+        <button className="stop-btn" onClick={handleStop}>
           ⏹ 정지
         </button>
+      </div>
+
+      {/* 인덱스 슬라이더 */}
+      <div className="slider-section">
+        <div className="slider-label">
+          <p>
+            {Number.isFinite(currentIndex)
+              ? `현재 인덱스: ${currentIndex + 1}/${coords.length}`
+              : `현재 인덱스: 0/${coords.length}`}
+          </p>
+        </div>
+
+        <div className="slider-box">
+          <input
+            type="range"
+            min="0"
+            max={coords.length - 1}
+            value={currentIndex ?? 0}
+            onChange={(e) => handleSliderChange(Number(e.target.value))}
+            className="slider-extended"
+          />
+        </div>
       </div>
     </div>
   );
