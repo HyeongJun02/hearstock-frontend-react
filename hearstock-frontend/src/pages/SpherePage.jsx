@@ -21,12 +21,13 @@ export default function SpherePage() {
           currentIndex={currentIndex}
           setCurrentIndex={setCurrentIndex}
         />
-        <SphereCoordsViewer coords={points} />
       </div>
-
-      <div className="sphere-right">
+      <div className="sphere-center">
         <Sphere3DScene points={points} currentIndex={currentIndex} />
         <Sphere2DGraph points={points} currentIndex={currentIndex} />
+      </div>
+      <div className="sphere-right">
+        <SphereCoordsViewer coords={points} />
       </div>
     </div>
   );
