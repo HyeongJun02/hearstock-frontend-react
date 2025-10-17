@@ -1,0 +1,92 @@
+.sound-player {
+  text-align: center;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+}
+
+.sound-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  color: #333;
+  letter-spacing: 0.4px;
+}
+
+/* 프리셋 버튼 그룹 */
+.preset-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 1.2rem;
+}
+
+.preset-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #f0f3f7;
+  color: #333;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.preset-btn.active {
+  background: #191919;
+  color: #fff;
+  box-shadow: 0 0 8px rgba(25, 118, 210, 0.3);
+}
+
+.preset-btn:hover:not(.active) {
+  background: #ccc;
+}
+
+/* 재생/정지 버튼 */
+.control-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.play-btn,
+.stop-btn {
+  padding: 10px 24px;
+  font-size: 15px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.play-btn {
+  background: #43a047;
+  color: #fff;
+}
+
+.play-btn:hover {
+  background: #388e3c;
+}
+
+.play-btn:disabled {
+  background: #c8e6c9;
+  cursor: not-allowed;
+}
+
+.stop-btn {
+  background: #e53935;
+  color: #fff;
+}
+
+.stop-btn:hover {
+  background: #c62828;
+}
+
+.stop-btn:disabled {
+  background: #ffcdd2;
+  cursor: not-allowed;
+}

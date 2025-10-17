@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as Tone from 'tone';
 
+import './SphereSoundPlayer.css';
+
 export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
   // 재사용 노드
   const pannerRef = useRef(null);
@@ -261,63 +263,33 @@ export default function SphereSoundPlayer({ coords, setCurrentIndex }) {
   };
 
   return (
-    <div style={{ textAlign: 'center', margin: '1rem' }}>
-      {/* 프리셋 토글 */}
-      <div
-        style={{
-          marginBottom: 12,
-          display: 'flex',
-          gap: 8,
-          justifyContent: 'center',
-        }}
-      >
-        <button
-          onClick={() => onClickPreset('low')}
-          style={{
-            padding: '6px 12px',
-            borderRadius: 8,
-            background: extLevel === 'low' ? '#e9f5ff' : '#f2f2f2',
-          }}
-        >
-          외재화: 낮음
-        </button>
-        <button
-          onClick={() => onClickPreset('basic')}
-          style={{
-            padding: '6px 12px',
-            borderRadius: 8,
-            background: extLevel === 'basic' ? '#e9f5ff' : '#f2f2f2',
-          }}
-        >
-          외재화: 기본
-        </button>
-        <button
-          onClick={() => onClickPreset('strong')}
-          style={{
-            padding: '6px 12px',
-            borderRadius: 8,
-            background: extLevel === 'strong' ? '#e9f5ff' : '#f2f2f2',
-          }}
-        >
-          외재화: 강함
-        </button>
+    <div className="sound-player">
+      <h3 className="sound-title">🔊 Sphere Sound Controller</h3>
+
+      <div className="preset-buttons">
+        {['low', 'basic', 'strong'].map((level) => (
+          <button
+            key={level}
+            className={`preset-btn ${extLevel === level ? 'active' : ''}`}
+            onClick={() => onClickPreset(level)}
+          >
+            {level === 'low'
+              ? '외재화: 낮음'
+              : level === 'basic'
+              ? '외재화: 기본'
+              : '외재화: 강함'}
+          </button>
+        ))}
       </div>
 
-      <button onClick={handlePlay} style={{ padding: '10px 20px' }}>
-        🔊 재생 (Beep)
-      </button>
-      <button
-        onClick={handleStop}
-        disabled={!isPlaying}
-        style={{
-          padding: '10px 20px',
-          borderRadius: 8,
-          opacity: !isPlaying ? 0.6 : 1,
-        }}
-        title={!isPlaying ? '재생 중이 아닙니다' : '정지'}
-      >
-        ⏹ 종료
-      </button>
+      <div className="control-buttons">
+        <button className="play-btn" onClick={handlePlay} disabled={isPlaying}>
+          ▶ 재생
+        </button>
+        <button className="stop-btn" onClick={handleStop} disabled={!isPlaying}>
+          ⏹ 정지
+        </button>
+      </div>
     </div>
   );
 }
