@@ -3,9 +3,10 @@ import SphereCoordsViewer from '../components/SphereCoordsViewer';
 import Sphere3DScene from '../components/Sphere3DScene';
 import SphereSoundPlayer from '../components/SphereSoundPlayer';
 import Sphere2DGraph from '../components/Sphere2DGraph';
-
 import { sampleData } from '../data/sampleData';
 import { convertToSphericalCoords } from '../utils/sphereUtils';
+
+import './SpherePage.css';
 
 export default function SpherePage() {
   const coords = convertToSphericalCoords(sampleData);
@@ -13,12 +14,21 @@ export default function SpherePage() {
   const [currentIndex, setCurrentIndex] = useState(null);
 
   return (
-    <div style={{ padding: '1rem' }}>
-      <h2 style={{ textAlign: 'center' }}>Sphere 좌표 결과</h2>
-      <Sphere3DScene points={points} currentIndex={currentIndex} />
-      <SphereSoundPlayer coords={coords} setCurrentIndex={setCurrentIndex} />
-      <Sphere2DGraph points={points} currentIndex={currentIndex} />
-      <SphereCoordsViewer coords={points} />
+    <div className="sphere-container">
+      <div className="sphere-left">
+        <SphereSoundPlayer
+          coords={coords}
+          currentIndex={currentIndex}
+          setCurrentIndex={setCurrentIndex}
+        />
+      </div>
+      <div className="sphere-center">
+        <Sphere3DScene points={points} currentIndex={currentIndex} />
+        <Sphere2DGraph points={points} currentIndex={currentIndex} />
+      </div>
+      <div className="sphere-right">
+        <SphereCoordsViewer coords={points} />
+      </div>
     </div>
   );
 }
