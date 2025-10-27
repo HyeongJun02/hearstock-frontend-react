@@ -8,6 +8,8 @@ export default function SpherePageWeb() {
 
   // Flutter → React 통신 함수 등록
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     window.updateStockChart = async ({ code, period, market }) => {
       try {
         const fullCode = code.includes('.') ? code : `${code}.KS`;
