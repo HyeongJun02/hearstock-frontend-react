@@ -179,7 +179,7 @@ export default function SphereSoundPlayer({
     // 프리셋 테이블
     const table = {
       low: {
-        ref: 0.5,
+        ref: 1.0,
         roll: 1.0,
         d: 0.8,
         late: 0.03,
@@ -196,8 +196,8 @@ export default function SphereSoundPlayer({
       },
       strong: {
         ref: 3.0,
-        roll: 0.01,
-        d: 2.0,
+        roll: 0.5,
+        d: 3.0,
         late: 0.07,
         high: -1.8,
         asym: 0.32,
@@ -238,7 +238,7 @@ export default function SphereSoundPlayer({
     panner.positionX.linearRampToValueAtTime(p.x, t);
     panner.positionY.linearRampToValueAtTime(p.y, t);
     panner.positionZ.linearRampToValueAtTime(-p.z, t);
-    synth.triggerAttackRelease(p.freq, 0.25);
+    synth.triggerAttackRelease(p.freq, 0.1);
   };
 
   /** 슬라이더 이동 핸들러 */
@@ -285,8 +285,8 @@ export default function SphereSoundPlayer({
         erGainLRef.current?.gain.rampTo(1 - asym * azApprox, 0.08);
         erGainRRef.current?.gain.rampTo(1 + asym * azApprox, 0.08);
 
-        synth.triggerAttackRelease(p.freq, 0.25);
-        await sleep(200);
+        synth.triggerAttackRelease(p.freq, 0.1);
+        await sleep(500);
         if (abortRef.current) break;
       }
     } finally {
