@@ -6,13 +6,8 @@ import SpherePageWeb from './pages/SpherePageWeb';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/sphere" element={<SpherePage />} />
-        <Route path="/webView" element={<SpherePageWeb />} />
-      </Routes>
-    </Router>
+    <div>hi
+    </div>
   );
 }
 
