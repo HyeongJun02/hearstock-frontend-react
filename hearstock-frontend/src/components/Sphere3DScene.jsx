@@ -1,7 +1,15 @@
-import React from 'react';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Line } from '@react-three/drei';
+import React, { useEffect, useState } from 'react';
 import './Sphere3DScene.css';
+
+// ✅ three.js 관련 모듈은 클라이언트 환경에서만 import
+let Canvas, OrbitControls, Line;
+if (typeof window !== 'undefined') {
+  const fiber = require('@react-three/fiber');
+  const drei = require('@react-three/drei');
+  Canvas = fiber.Canvas;
+  OrbitControls = drei.OrbitControls;
+  Line = drei.Line;
+}
 
 function Point({ position, color = 'grey', isActive }) {
   return (
@@ -18,8 +26,20 @@ function Point({ position, color = 'grey', isActive }) {
   );
 }
 
-export default function Sphere3DScene({ points, currentIndex }) {
+export default function Sphere3DScene({ points = [], currentIndex = 0 }) {
+  const [isClient, setIsClient] = useState(false);
+
+  // ✅ 브라우저 환경에서만 렌더링하도록 설정
+  useEffect(() => {
+    setIsClient(typeof window !== 'undefined');
+  }, []);
+
   const linePoints = points.map((p) => [p.x, p.y, p.z]);
+
+  if (!isClient) {
+    // SSR 환경(Vercel 빌드 등)에서는 아무것도 렌더링하지 않음
+    return null;
+  }
 
   return (
     <div className="sphere3d-container">
@@ -30,11 +50,7 @@ export default function Sphere3DScene({ points, currentIndex }) {
           <directionalLight position={[3, 5, 2]} intensity={1.2} />
           <pointLight position={[0, 0, 3]} intensity={0.8} />
 
-          <OrbitControls
-            enablePan={true}
-            enableZoom={true}
-            enableRotate={true}
-          />
+          <OrbitControls enablePan enableZoom enableRotate />
 
           {/* 점 + 선 */}
           {points.map((p, idx) => (
