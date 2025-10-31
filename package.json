@@ -11,9 +11,9 @@
     "@testing-library/react": "^16.1.0",
     "@testing-library/user-event": "^13.2.1",
     "chart.js": "^4.4.9",
-    "react": "^19.1.0",
+    "react": "^18.3.1",
     "react-chartjs-2": "^5.3.0",
-    "react-dom": "^19.1.0",
+    "react-dom": "^18.3.1",
     "react-router-dom": "^7.6.2",
     "react-scripts": "5.0.1",
     "recharts": "^3.3.0",
@@ -28,10 +28,17 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": ["react-app", "react-app/jest"]
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
-    "production": [">0.2%", "not dead", "not op_mini all"],
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
